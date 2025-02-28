@@ -830,7 +830,7 @@ C++中空指针也是可以调用成员函数的,但是要注意有没有用到t
 通过自己写全局函数,实现两个对象相加属性后返新的对象
 
 ``` cpp
-Person PersonAddPerson(Person& p) {
+Person PersonAddPerson(Person &p) {
   Person temp;
   temp.m_A = this->m_A + p.m_A;
   temp.m_B = this->m_B + p.m_Bz ;
@@ -864,8 +864,41 @@ Person p3 = p1 + p2;
 
 利用成员函数重载左移运算符可以实现`p.operator<<(cout)`简化版本`p << cout`
 
-不会利用成员函数重载`<<`运算符,因为无法实现`cout`在左侧
+不会利用成员函数重载`<<`运算符,因为无法实现`cout`在左侧,应使用全局函数的方式实现
+
+例如:
+
+``` cpp
+ostream& operator<< (ostream &cout, Person &p)
+{
+  cout << m_A << m_B;
+  return cout;
+}
+```
 
 #### 递增运算符重载
 
-作用:通过重载递增运算符,实现自己的整形数据
+作用:通过重载递增运算符,实现自己的整型数据
+
+``` cpp
+//重载前置++运算符 返回引用为了一直对一个数据进行递增操作
+MyInteger& operator++()
+{
+  //先进行++运算
+  m_Num++;
+  //再将自身做返回
+  return *this;
+}
+
+//重载后置++运算符
+//void operator++(int) int代表占位参数,用于区分前置和后置递增
+void operator++(int)
+{
+  //先记录当时结果
+  MyInteger temp = *this;
+  //后递增
+  ++m_Num;
+  //最后将记录结果做返回
+  return temp;
+}
+```
