@@ -1892,3 +1892,203 @@ void test01()
   for_each(v.begin(), v.end(), MyPrint);
 }
 ```
+
+#### vector存放自定义数据类型
+
+``` cpp
+//存放对象
+void test01()
+{
+  vector<Person> v;
+
+  //创建数据
+  Person p1("aaa", 10);
+  Person p2("bbb", 20);
+  Person p3("ccc", 30);
+  Person p4("ddd", 40);
+  Person p5("eee", 50);
+
+  v.push_back(p1);
+  v.push_back(p2);
+  v.push_back(p3);
+  v.push_back(p4);
+  v.push_back(p5);
+
+  for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
+  {
+    cout << "Name: " << it->mName << "Age: " << it->mAge << endl;
+  }
+}
+```
+
+#### vector容器嵌套容器
+
+``` cpp
+#include <vector>
+
+//容器嵌套容器
+void test01()
+{
+  vector< vector<int> > v;
+
+  vector<int> v1;
+  vector<int> v2;
+  vector<int> v3;
+  vector<int> v4;
+
+  //将小容器插入到大容器中
+  for (int i = 0; i < 4; i++)
+  {
+    v1.push_back(i + 1);
+    v2.push_back(i + 1);
+    v3.push_back(i + 1);
+    v4.push_back(i + 1);
+  }
+
+  //通过大容器,把所有数据遍历一遍
+  for (vector< vector<int> >::iterator it = v.begin(); it != v.end(); it++)  
+  {
+    //(*it) - 容器vector<int>
+    for (vector<int>::iterator vit = (*it).begin(); vit != (*it).end(); vit++)
+    {
+      cout << *vit << " ";
+    }
+    cout << endl;
+  }
+}
+```
+
+#### string基本概念
+
+本质:
+
+- string是C++风格字符串,而string本质上是一个类
+
+string和char*区别:
+
+- char*是一个指针
+- string是一个类,类内部封装了char*,管理这个字符串,是一个char*类型的容器
+
+特点:
+
+string类内部封装了很多成员方法
+
+例如:查找find,拷贝copy,删除delete替换replace,插入insert
+
+string管理char*所分配的内存,不用担心复制越界和取值越界等,由类内部进行负责
+
+##### string构造函数
+
+构造函数原型:
+
+- `string()` 创建一个空的字符串,例如:string str;
+- `string(const char* S)` 使用字符串S初始化
+- `string(const string& str)` 使用一个string对象初始化另一个string对象
+- `string(int n, char c)` 使用n个字符c初始化
+
+总结:string的多种构造方式没有科比行,灵活使用即可
+
+##### string赋值操作
+
+赋值的函数原型:
+
+- `string& operator=(const char* s);` char*类型字符串赋值给当前字符串
+- `string& operator=(const string &s);` 把字符串s赋给当前字符串
+- `string& operator=(char c);` 把字符赋给当前字符串
+- `string& assign(const char* s);` 把字符串s赋给当前字符串
+- `string& assign(const char* s, int n);` 把字符串s的前n个字符赋给当前的字符串
+- `string& assign(const string& s);` 把字符串s赋给当前字符串
+- `string& assign(int n, char c);` 用n个字符c赋给当前字符串
+
+##### string字符串拼接
+
+函数原型:
+
+- `string& operator+=(const char* str);` 重载+=操作符
+- `string& operator+=(const char c);` 重载+=操作符
+- `string& operator+=(const string& str);` 重载+=操作符
+- `string& append(const char* s);` 把字符串s连接到当前字符串结尾
+- `string& append(const char* s, int n);` 把字符串s的前n个字符连接到当前字符串结尾
+- `string& append(const string& s);` 同operator+=(const string& str)
+- `string& append(const string& s, int pos, int n);` 字符串s中从pos开始的n个字符连接到字符串结尾
+
+##### string查找和替换
+
+函数原型:
+
+- `int find(const string& str, int pos = 0) const;` 查找str第一次出现的位置,从pos开始查找
+- `int find(const char* s, int pos = 0) const;` 查找s第一次出现的位置,从pos开始查找
+- `int find(const char* s, int pos, int n) const;` 从pos位置查找s的前n个字符第一次出现的位置
+- `int find(const char c, int pos = 0) const;` 查找字符c第一次出现位置
+- `int rfind(const string& str, int pos = npos) const;` 查找str最后一次位置,从pos开始查找
+- `int rfind(const char* s, int pos = npos) const;` 查找s最后一次出现位置,从pos开始查找
+- `int rfind(const char* s, int pos, int n) const;` 从pos查找s的前n个字符最后一次位置
+- `int rfind(const char c, int pos = 0) const;` 查找字符c最后一次出现位置
+- `string& replace(int pos, int n, const string& str);` 替换从pos开始的n个字符为字符串str
+- `string& replace(int pos, int n, const char* s);` 替换从pos开始的n个字符为字符串s
+
+##### string 字符串比较
+
+函数原型:
+
+- `int compare(const string& s) const;` 与字符串s比较
+- `int compare(const char* s) const;` 与字符串s比较
+
+##### string字符存取
+
+string中单个字符存取方式有两种:
+
+- `char& operator[](int n);` 通过[]方式取字符
+- `char& at(int n);` 通过at方法获取字符
+
+##### string插入和删除
+
+函数原型:
+
+- `string& insert(int pos, const char* s);` 插入字符串
+- `string& insert(int pos, const string& str);` 插入字符串
+- `string& insert(int pos, int n, char c);` 在指定位置插入n个字符c
+- `string& erase(int pos, int n = npos);` 删除从pos开始的n个字符
+
+总结:插入和删除的起始下标都从0开始
+
+##### string子串
+
+- `string substr(int pos = 0, int n = npos) const;` 返回由pos开始的n个字符组成的字符串
+
+#### vector容器
+
+##### vector基本概念
+
+功能:
+
+- vector数据结构和**数组非常相似**,也称为**单端数组**
+
+vector与普通数组的区别:
+
+- 不同之处在于数组是静态空间,而vector可以**动态扩展**
+
+动态扩展:
+
+- 并不是在原空间之后续接新空间,而是找更大的内存空间,然后将原数据拷贝到新空间,释放原空间
+
+![alt text](images/image3.png)
+
+- vector容器的迭代器是支持随机访问的迭代器
+
+##### vector构造函数
+
+函数原型:
+
+- `vector<T> v;` 采用模板实现类实现,默认构造函数
+- `vector(v.begin(), v.end());` 将`v[begin(), end())`区间中的元素拷贝给本身
+- `vector(n, elem);` 构造函数将n个elem拷贝给本身
+- `vector(const vector& vec);` 拷贝构造函数
+
+##### vector赋值操作
+
+函数原型:
+
+- `vector& operator=(const vector& vec);` 重载等号操作符
+- `assign(beg, end);` 将`[beg, end)`区间中的数据拷贝赋值给本身
+- `assign(n, elem);` 将n个elem拷贝赋值给本身
