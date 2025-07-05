@@ -2092,3 +2092,160 @@ vector与普通数组的区别:
 - `vector& operator=(const vector& vec);` 重载等号操作符
 - `assign(beg, end);` 将`[beg, end)`区间中的数据拷贝赋值给本身
 - `assign(n, elem);` 将n个elem拷贝赋值给本身
+
+##### vector容量和大小
+
+函数原型:
+
+- `empty();` 判断容器是否为空
+- `capacity();` 容器的容量
+- `size();  返回容器中元素的个数
+- `resize(int num);` 重新指定容器的长度为num,若容器变长,则以默认值填充新位置,如果容器变短,则末尾超出容器长度的元素被删除
+- `resize(int num, elem);` 重新指定容器的长度为num,若容器变长,则以elem值填充新位置,如果容器变短,则末尾超出容器长度的元素被删除
+
+##### vector插入和删除
+
+函数原型:
+
+- `push_back(ele);` 尾部插入元素ele
+- `pop_back();` 删除最后一个元素
+- `insert(const_iterator pos, ele);` 迭代器指向位置pos插入元素ele
+- `insert(const_iterator pos, int count, ele);` 迭代器指向位置pos插入count个元素ele
+- `erase(const_iterator pos);` 删除迭代器指向的元素
+- `erase(const_iterator start, const_iterator end);` 删除迭代器从start到end之间的元素
+- `clear();` 删除容器中所有元素
+
+##### vector数据存取
+
+函数原型:
+
+- `at(int idx);` 返回索引idx所指向的数据
+- `operator[];` 返回索引idx所致想到数据
+- `front();` 返回容器中第一个数据元素
+- `back();` 返回容器中最后一个数据元素
+
+总结:
+
+- 出了用迭代器获取vector容器中的元素,[]和at也可以
+- front返回容器第一个元素
+- back返回容器最后一个元素
+
+##### vector互换容器
+
+函数原型:
+
+- `swap(vec);` 将vec与本身的元素互换
+
+`vector<int>(v).swap(v); //匿名对象`
+
+总结:swap可以使两个容器互换,可以达到收缩内存的效果
+
+##### vector预留空间
+
+函数原型:
+
+- `reserve(int len);` 容器预留len个元素长度,预留位置不初始化,元素不可访问
+
+总结:如果数据量较大,可以一开始利用reserve预留空间
+
+#### deque容器
+
+##### deque容器基本概念
+
+功能:双端数组,可以对头端进行插入删除操作
+
+deque与vector区别:
+
+- vector对于头部的插入删除效率低,数据量越大,效率越低
+- deque相对而言,对头部的插入删除速度比vector快
+- vector访问元素时的速度会比deque快,这和两者内部实现有关
+
+![alt text](/images/image4.png)
+
+deque内部工作原理:
+
+deque内部有个**中控器**,维护每段缓冲区中的内容,缓冲区中存放真实数据
+ 
+中控器维护的是每个缓冲区的地址,使得使用deque时像一片连续的内存空间
+
+![alt text](/images/image5.png)
+
+- deque容器的迭代器也是支持随机访问的
+
+##### deque构造函数
+
+函数原型:
+
+- `deque<T> deqT;` 默认构造形式
+- `deque(beg, end);` 构造函数将`[beg, end)`区间中的元素拷贝给本身
+- `deque(n, elem);` 构造函数将n个elem拷贝给本身
+- `deque(const deque& deq);` 拷贝构造函数
+
+##### deque赋值操作
+
+函数原型:
+
+- `deque& operator=(const deque& deq);` 重载等号运算符
+- `assign(beg, end);` 将`[beg, end)区间中的数据拷贝赋值给本身`
+- `assign(n, elem);` 将n个elem拷贝赋值给本身
+
+##### deque大小操作
+
+函数原型:
+
+- `deque.empty();` 判断容器是否为空
+- `deque.size();` 返回容器中元素的个数
+- `deque.resize(num);` 重新指定容器的长度为num,若容器变长,则以默认值填充新位置.如果容器变短,则末尾超出容器长度的元素被删除
+-  `deque.resize(num, elem);` 重新指定容器的长度为num,若容器变长,则以elem值填充新位置.如果容器变短,则末尾超出容器长度的元素被删除
+  
+总结:
+
+- deque没有容量的概念
+- 判断是否为空 - empty
+- 返回元素个数 - size
+- 重新指定个数 - resize
+
+##### deque插入和删除
+
+函数原型:
+
+两端插入操作:
+
+- `push_back(elem);` 在容器尾部添加一个数据
+- `push_front(elem);` 在容器头部插入一个数据
+- `pop_back();` 删除容器最后一个数据
+- `pop_front();` 删除容器第一个数据
+
+指定位置操作:
+
+- `insert(pos, elem);` 在pos位置插入一个elem元素的拷贝,返回新数据的位置
+- `insert(pos, n, elem);` 在pos位置插入n个elem数据,无返回值
+- `insert(pos, beg, end);` 在pos位置插入`[beg, end)`区间的数据,无返回值
+- `clear();` 清空容器的所有数据
+- `erase(beg, end);` 删除`[beg, end)`区间的数据,返回下一个数据的位置
+- `erase(pos);` 删除pos位置的数据,返回下一个数据的位置
+
+总结:
+
+- 插入和删除提供的位置是迭代器
+- 尾插 - push_bach
+- 尾删 - pop_back
+- 头插 - push_front
+- 头删 - pop_front
+
+##### deque数据存取
+
+函数原型:
+
+- `at(int ide);` 返回索引idx所指的数据
+- `operator[];` 返回索引idx所指的数据
+- `front();` 返回容器中第一个数据元素
+- `back();` 返回容器中最后一个数据元素
+
+##### deque排序
+
+算法:
+
+- `sort(iterator beg, iterator end)` 对beg和end区间内元素进行排序
+
+总结:sort算法非常实用,使用时包含头文件algorithm即可
