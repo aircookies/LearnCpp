@@ -2421,3 +2421,253 @@ List有一个重要的性质,插入操作和删除操作都不会造成原有lis
 所有不支持随机访问迭代器的容器不可以用标准算法
 
 不支持随机访问迭代器的容器内部会提供对应的一些算法
+
+#### set/multiset容器
+
+##### set基本概念
+
+简介:
+
+- 所有元素都会在插入时自动被排序
+
+本质:
+
+- set/multiset属于**关联式容器**,底层结构使用**二叉树**实现
+
+set和multiset区别:
+
+- set不允许容器中有重复的元素
+- multiset允许容器中有重复的元素
+
+##### set构造和赋值
+
+构造:
+
+- `set<T> st; 默认构造函数
+- `set(const set& st);` 拷贝构造函数
+
+赋值:
+
+- `set& operator=(const set& st);`
+
+总结:
+
+- set容器插入数据时使用insert
+- set容器插入的数据会自动排序
+
+##### set大小和交换
+
+函数原型:
+
+- `size();` 返回容器中元素的数目
+- `empty();` 判断容器是否为空
+- `swap(st);` 交换两个集合容器
+
+##### set插入和删除
+
+函数原型:
+
+- `insert(elem);` 在容器中插入元素
+- `clera();` 清除所有元素
+- `erase(pos);` 删除pos迭代器所指的元素,返回下一个元素的迭代器
+- `erase(beg, end);` 删除区间`[beg, end)`的所有元素,返回下一个元素的迭代器
+- `erase(elem);` 删除容器中值为elem的元素
+
+##### set查找和统计
+
+函数原型:
+
+- `find(key)` 查找key是否存在,若存在,返回该键的元素的迭代器,若不存在,返回set.end();
+- `count(key);` 统计key的元素个数(对于set,结果为0或1)
+
+##### set和multiset区别
+
+区别:
+
+- set不可以插入重复数据,而multiset可以
+- set插入数据的同时会返回插入结果,表示插入是否成功
+- multiset不会检测数据,因此可以重复插入数据
+
+总结:
+
+- 如果不允许插入重复数据可以利用set
+- 如果需要插入重复数据利用multiset
+
+##### pair对组创建
+
+功能描述:
+
+- 成对出现的数据,利用对组可以返回两个数据
+
+两种创建方式:
+
+- `pair<type, type> p(value1, value2);`
+- `pair<type, type> p = make_pair(value1, value2);`
+
+##### set容器排序
+
+利用仿函数,可以改变set容器排序规则
+
+``` cpp
+class MyCompare
+{
+  public: 
+    operator()(int v1, int v2)
+    {
+      return v1 > v2;
+    }
+};
+
+void test01()
+{
+  set<int> s1;
+  s1.insert(10);
+  s1.insert(30);
+  s1.insert(20);
+  s1.insert(50);
+  s1.insert(40);
+
+  //默认从小到大
+  for (set<int>::iterator it = s1.begin(); it != s1.end(); it++)
+  {
+    cout << *it << " ";
+  }
+  cout << endl;
+
+  //指定排序规则
+  set<int, MyCompare> s2;
+  s2.insert(10);
+  s2.insert(20);
+  s2.insert(30);
+  s2.insert(40);
+  s2.insert(50);
+
+  for (set<int, MyCompare>::iterator it = s2.begin(); it != s2.end(); it++)
+  {
+    cout << *it << " ";
+  }
+  cout << endl;
+}
+```
+
+对于自定义数据类型,set必须指定排序规则才可以插入数据
+
+#### map/multimap容器
+
+##### map基本概念
+
+简介:
+
+- map中所有元素都是pair
+- pair中第一个元素为key(键值),起到索引作用,第二个元素为value(实值)
+- 所有元素都会根据元素的键值自动排序
+
+本质:
+
+- map/multimap属于**关联式容器**,底层结构使用二叉树实现
+
+优点:
+
+- 可以根据key值快速找到value值
+
+map和multimap区别:
+
+- map不允许容器中有重复key值元素
+- multimap允许容器中有重复key值元素
+
+##### map构造和赋值
+
+函数原型:
+
+构造:
+
+- `map<T1, T2> mp;` map默认构造函数
+- `map(const map& mp);` 拷贝构造函数
+
+赋值:
+
+- `map& operator=(const map& mp);` 重载等号操作符
+
+``` cpp
+//map 容器,构造和赋值
+void test01()
+{
+  //创建map容器
+  map<int, int> m;
+}
+```
+
+总结:map中所有元素都是成对出现,插入数据时要用对组
+
+##### map大小和交换
+
+函数原型:
+
+- `size();` 返回容器中元素的数目
+- `empty();` 判断容器是否为空
+- `swap(st);` 交换两个集合容器
+
+##### map插入和删除
+
+函数原型:
+
+- `insert(elem);` 在容器中插入元素
+- `clear();` 清除所有元素
+- `erase(pos);` 删除pos迭代器所指的元素,返回下一个元素的迭代器
+- `erase(beg, end);` 删除区间`[beg, end)`的所有元素,返回下一个元素的迭代器
+- `erase(key);` 删除容器中值为key的元素
+
+``` cpp
+void test01()
+{
+  //插入
+  map<int, int> m;
+  //第一种插入方式
+  m.insert(pair<int, int>(1, 10));
+  //第二种插入方式
+  m.insert(make_pair(2, 20));
+  //第三种插入方式
+  m.insert(map<int, int>::value_type(3, 30));
+  //第四种插入方式
+  m[4] = 40;
+}
+```
+
+##### map查找和统计
+
+函数原型:
+
+- `find(key);` 查找key是否存在,若存在,返回该键的元素的迭代器;若不存在,返回set.end();
+- `count(key);` 统计key的元素个数(对于map,结果为0或1)
+
+##### map容器排序
+
+利用仿函数,可以改变排序规则
+
+``` cpp
+class MyCompare
+{
+  public:
+    bool operator()(int v1, int v2)
+    {
+      //降序
+      return v1 > v2;
+    }
+};
+
+void test01
+{
+  map<int, int, MyCompare> m;
+
+  m.insert(make_pair(1, 10));
+  m.insert(make_pair(2, 20));
+  m.insert(make_pair(3, 30));
+  m.insert(make_pair(4, 40));
+  m.insert(make_pair(5, 50));
+
+  for (map<int, int, MyCompare>::iterator it = m.begin(); it != m.end(); it++)
+  {
+    cout << "key = " << it->first << " value = " << it->second << endl;
+  }
+}
+```
