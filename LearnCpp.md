@@ -2671,3 +2671,189 @@ void test01
   }
 }
 ```
+
+### STL-函数对象
+
+#### 函数对象
+
+##### 函数对象概念
+
+概念:
+
+- 重载**函数调用操作符**的类,其对象常被称为**函数对象**
+- **函数对象**使用重载的()时,行为类似函数调用,也叫**仿函数**
+
+本质:
+
+- 函数对象(仿函数)是一个**类**,不是一个函数
+
+##### 函数对象使用
+
+特点:
+
+- 函数对象在使用时,可以像普通函数那样调用,可以有参数,可以有返回值
+- 函数对象超出普通函数的个概念,函数对象可以有自己的状态
+- 函数对象可以作为参数传递
+
+#### 谓词
+
+##### 谓词概念
+
+概念:
+
+- 返回bool类型的仿函数称为**谓词**
+- 如果operator()接受一个参数,那么叫做一元谓词
+- 如果operator()接受两个参数,那么叫做二元谓词
+
+#### 内建函数对象
+
+分类:
+
+- 算数仿函数
+- 关系仿函数
+- 逻辑仿函数
+
+用法:
+
+- 这些仿函数所产生的对象,用法和一般函数完全相同
+- 使用内建函数对象,需要引入头文件`#include<functional>`
+
+##### 算术仿函数
+
+功能描述:
+
+- 实现四则运算
+- 其中negate是一元运算,其他都是二元运算
+
+仿函数原型:
+
+- `template<class T> T plus<T>` 加法仿函数
+- `template<class T> T minus<T>` 减法仿函数
+- `template<class T> T multiplies<T>` 乘法仿函数
+- `template<class T> T divides<T>`  除法仿函数
+- `template<class T> T modulus<T>` 取模仿函数
+- `template<class T> T negate<T>` 取反仿函数
+
+##### 关系仿函数
+
+仿函数原型:
+
+- `template<class T> bool equal_to<T>` 等于
+- `template<class T> bool not_equal_to<T>` 不等于
+- `template<class T> bool greater<T>` 大于
+- `template<class T> bool greater_equal<T>` 大于等于
+- `template<class T> bool less<T>` 小于
+- `template<class T> bool less_equal<T>` 小于等于
+
+##### 逻辑仿函数
+
+函数原型:
+
+- `template<class T> bool logical_and<T>` 逻辑与
+- `template<class T> bool logical_or<T>` 逻辑或
+- `template<class T> bool logical_not<T>` 逻辑非
+
+### STL-常用算法
+
+概述:
+
+- 算法只要是由头文件`<algorithm>` `<functional>` `<numeric>`组成
+- `<algorithm>`是所有STL头文件中最大的一个,范围涉及到比较,交换,查找,遍历操作,复制,修改等等
+- `<numeric>`体积很小,只包括几个在序列上面进行简单数学运算的模板函数
+- `<functional>`定义了一些模板类,用以声明函数对象
+
+#### 常用遍历算法
+
+算法简介:
+
+- `for_each` 遍历容器
+- `transform` 搬运容器到另一个容器中
+
+##### for_each
+
+``` cpp
+void print01(int val)
+{
+  cout << val << " ";
+}
+
+class print02
+{
+public:
+  void operator()(int val)
+  {
+    cout << val << " ";
+  }
+};
+
+//for_each算法基本用法
+void test01()
+{
+  vector<int> v;
+  for (int i = 0; i < 10; i++)
+  {
+    v.push_back(i);
+  }
+
+  //遍历算法
+  for_each(v.begin(), v.end(), print01);
+  cout << endl;
+
+  for_each(v.begin(), v.end(), print02());
+  cout << endl;
+}
+```
+
+总结:for_each在实际开发中是最常用的遍历算法,需要熟练掌握
+
+##### transform
+
+函数原型:
+
+- `transform(iterator beg1, iterator end1, iterator beg2, _func);`
+
+其中:
+
+- beg1源容器开始迭代器
+- end1源容器结束迭代器
+- beg2目标容器开始迭代器
+- _func函数或者函数对象
+
+总结:搬运的目标容器必须要提前开辟空间,否则无法正常搬运
+
+#### 常用查找算法
+
+算法简介:
+
+- `find` 查找元素
+- `find_if` 按条件查找元素
+- `adjacent_find` 查找相邻元素
+- `binary_search` 二分查找法
+- `count` 统计元素个数
+- `count_if` 按条件统计元素个数
+
+##### find
+
+功能描述:查找指定元素,找到就返回指定元素的迭代器,找不到就返回结束迭代器end()
+
+函数原型:
+
+- `find(iterator beg, iterator end, value);`
+
+按值查找元素,找到返回指定位置迭代器,找不到返回结束迭代器位置
+
+- beg开始迭代器
+- end结束迭代器
+- value查找的元素
+
+##### find_if
+
+函数原型:
+
+- `find_if(iterator beg, iterator end, _Pred);`
+
+按值查找元素,找到返回指定位置迭代器,找不到返回结束迭代器位置
+
+- beg 开始迭代器位置
+- end 结束迭代器位置
+- _Pred 函数或者谓词(返回bool类型的仿函数)
