@@ -2857,3 +2857,172 @@ void test01()
 - beg 开始迭代器位置
 - end 结束迭代器位置
 - _Pred 函数或者谓词(返回bool类型的仿函数)
+
+##### adjacent_find
+
+功能描述:查找相邻重复元素
+
+函数原型:
+
+- `adjacent_find(iterator beg, iterator end);`
+
+查找相邻重复元素,返回相邻元素的第一个位置的迭代器
+
+- beg 开始迭代器
+- end 结束迭代器
+
+##### binary_search
+
+功能描述:查找指定元素是否存在
+
+函数原型:
+
+- `bool binary_search(iterator beg, iterator end, value);`
+
+查找指定的元素,查到就返回true,否则返回false
+
+注意:在**无序序列**中不可用
+
+- beg 开始迭代器
+- end 结束迭代器
+- value 查找的元素
+
+##### count
+
+功能描述:统计元素个数
+
+函数原型:`count(iterator beg, iterator end, value);`
+
+统计元素出现次数
+
+- beg 开始迭代器
+- end 结束迭代器
+- value 统计的元素
+
+总结:统计自定义数据类型的时候,需要搭配重载 `operator==`
+
+##### count_if
+
+功能描述:
+
+- 按条件统计元素个数
+
+函数原型:
+
+- `count_if(iterator beg, iterator end, _Pred)`
+
+按条件统计元素出现次数
+
+- beg 开始迭代器
+- end 结束迭代器
+- _Pred谓词
+
+#### 常用排序算法
+
+算法简介:
+
+- `sort` 对容器内元素进行排序
+- `random_shuffle` 洗牌,指定范围内的元素随机调整次序
+- `merge` 容器元素合并,并存储到另一容器中
+- `reverse` 反转指定范围的元素
+
+##### sort
+
+功能描述:
+
+- 对容器内元素进行排序
+
+函数原型:
+
+- `sort(iterator beg, iterator end, _Pred);`
+
+按值查找元素,找到返回指定位置迭代器,找不到返回结束迭代器位置
+
+- beg 开始迭代器
+- end 结束接待器
+- Pred 谓词
+
+总结:sort属于开发中最常用的算法之一,需要熟练掌握
+
+##### random_shuffle
+
+功能描述:洗牌,指定范围内的元素随机调整次序
+
+函数原型:
+
+- `random_shuffle(iterator beg, iterator end);`
+
+指定范围内的元素随机调整次序
+
+- beg 开始迭代器
+- end 结束迭代器
+
+注意:
+
+- 该函数内部会使用默认的`std::rand()`函数来完成随机元素的选择,依赖全局状态
+- 该函数在C++14中不建议使用,在C++17中已被移除
+
+##### merge
+
+功能描述:两个容器元素合并,并存储到另一容器中
+
+函数原型:
+
+- `merge(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);`
+
+容器元素合并,并存储到另一容器中
+
+注意:两个容器必须是**有序的**
+
+- beg1 容器1开始迭代器
+- end1 容器1结束迭代器
+- beg2 容器2开始迭代器
+- end2 容器2结束迭代器
+- dest 目标容器开始迭代器
+
+##### reverse
+
+功能描述:将容器内元素进行反转
+
+函数原型:
+
+- `reverse(iterator beg, iterator end);`
+
+反转指定范围的元素
+
+- beg 开始迭代器
+- end 结束迭代器
+
+#### 常用拷贝和替换算法
+
+算法简介:
+
+- `copy` 容器内指定范围的元素拷贝到另一容器中
+- `replace` 将容器内指定范围的旧元素修改为新元素
+- `replace_if` 容器内指定范围满足条件的元素替换为新元素
+- `swap` 互换两个容器的元素
+
+##### copy
+
+功能描述:容器内指定范围的元素拷贝到另一容器中
+
+函数原型:
+
+- `copy(iterator beg, iterator end, iterator dest);`
+
+按值查找元素,找到返回指定位置迭代器,找不到返回结束迭代器位置
+
+##### replace
+
+功能描述:将容器内指定范围的旧元素修改为新元素
+
+函数原型:
+
+- `replace(iterator beg, iterator end, oldvalue, newvalue);`
+
+将区间内的旧元素替换成新元素
+
+- beg 开始迭代器
+- end 结束迭代器
+- oldvalue 旧元素
+- newvalue 新元素
