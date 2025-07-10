@@ -3026,3 +3026,143 @@ void test01()
 - end 结束迭代器
 - oldvalue 旧元素
 - newvalue 新元素
+ 
+##### replace_if
+
+功能描述:将区间内满足条件的元素,替换成指定元素
+
+函数原型:
+
+- `replace_if(iterator beg, iterator end, _Pred, newvalue);`
+
+按条件替换元素,满足条件的替换成指定元素
+
+- beg 开始迭代器
+- end 结束迭代器
+- _Pred 谓词
+- newvalue 替换的新元素
+
+##### swap
+
+功能描述:互换两个容器的元素
+
+函数原型:
+
+- `swap(container c1, container c2);`
+
+互换两个容器的元素
+
+- c1 容器1
+- c2 容器2
+
+总结:swap交换容器时,注意交换的容器要同种类型
+
+#### 常用算术生成算法
+
+注意:
+
+- 算术生成算法属于小型算法,使用时包含的头文件为`#include <numeric>`
+
+算法简介:
+
+- `accumulate` 计算容器元素累计总和
+- `fill` 向容器中添加元素
+
+##### accumulate
+
+功能描述:计算区间内容器元素累计总和
+
+函数原型:
+
+- `accumulate(iterator beg, iterator end, value);`
+
+计算容器元素累计总和
+
+- beg 开始迭代器
+- end 结束迭代器
+- value 起始值
+
+##### fill
+
+功能描述:向容器中填充指定元素
+
+函数原型:
+
+- `fill(iterator beg, iterator end, value);`
+
+向容器中填充元素
+
+- beg 开始迭代器
+- end 结束迭代器
+- value 填充的值
+
+#### 常用集合算法
+
+算法简介:
+
+- `set_intersection` 求两个容器的交集
+- `set_union` 求两个容器的并集
+- `set_difference` 求两个容器的差集
+
+##### set_intersection
+
+功能描述:求两个容器的交集
+
+函数原型:
+
+- `set_intersection(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);`
+
+求两个集合的交集
+
+注意:**两个集合必须是有序序列**
+
+- beg1 容器1开始迭代器
+- end1 容器1结束迭代器
+- beg2 容器2开始迭代器
+- end2 容器2结束迭代器
+- dest 目标容器开始迭代器
+
+##### set_union
+
+功能描述:求两个集合的并集
+
+函数原型:
+
+- `set_union(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);`
+
+求两个集合的并集
+
+注意:**两个集合必须是有序序列**
+
+- beg1 容器1开始迭代器
+- end1 容器1结束迭代器
+- beg2 容器2开始迭代器
+- end2 容奇2结束迭代器
+- dest 目标容器开始迭代器
+
+总结:
+
+- 目标容器开辟空间需要**两个容器相加**
+- set_union返回值是并集中最后一个元素的位置
+
+##### set_difference
+
+功能描述:求两个集合的差集
+
+函数原型:
+
+- `set_difference(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest);`
+
+求两个集合的差集
+
+注意:**两个集合必须是有序序列**
+
+- beg1 容器1开始迭代器
+- end1 容器1结束迭代器
+- beg2 容器2开始迭代器
+- end2 容器2结束迭代器
+- dest 目标容器开始迭代器
+
+总结:
+
+- 目标容器开辟空间需要从**两个容器取较大值**
